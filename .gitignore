@@ -1,0 +1,51 @@
+# Compiled output
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Build cache and artifacts
+*.test
+*.out
+*.prof
+*.trace
+/dist
+/vendor
+
+# Go binaries and packages
+/bin
+/pkg
+
+# IDE-specific directories
+.idea/
+.vscode/
+
+# Log files
+*.log
+
+# Backup files
+*~
+
+# Environment-specific files
+.env
+.env.local
+.env.*.local
+
+# Credentials and sensitive information
+*.pem
+*.key
+*.cer
+*.cert
+*.crt
+*.csr
+*.srl
+*.p12
+*.pfx
+*.password
+*.secret
+*.token
+*.env
+
+# Dependency management
+/vendor
