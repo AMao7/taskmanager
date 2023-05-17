@@ -11,19 +11,19 @@ import (
 
 var DB *gorm.DB
 
-func ConnectDatabase() {
+func ConnectDatabase() *gorm.DB {
 	username, password, host, port, database := os.Getenv("DB_USERNAME"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB_NAME")
 
 	connectionString := fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s", username, password, host, port, database)
 
-	db, err := gorm.Open(postgres.Open(connectionString), &gorm.Config{})
+	DB, err := gorm.Open(postgres.Open(connectionString), &gorm.Config{})
 
 	if err != nil {
 		panic("Failed to Connect to database")
 	}
-	db.AutoMigrate(&entity.User{}, &entity.Task{})
+	DB.AutoMigrate(&entity.User{}, &entity.Task{})
 
-	psqlDB, err := db.DB()
+	psqlDB, err := DB.DB()
 	if err != nil {
 		panic("Failed to get PSQL DB!")
 	}
@@ -32,5 +32,5 @@ func ConnectDatabase() {
 	if err != nil {
 		panic("Failed to ping database!")
 	}
-
+	return DB
 }
