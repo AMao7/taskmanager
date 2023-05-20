@@ -21,7 +21,7 @@ type TaskStore interface {
 	// GetByID(id uint) (*Task, error)
 	Create(task *Task) error
 	// Update(id *Task) error
-	// Delete(id uint) error
+	Delete(id uint) error
 }
 
 type GormTaskStore struct {
@@ -30,6 +30,10 @@ type GormTaskStore struct {
 
 func NewGormTaskStore(x *gorm.DB) GormTaskStore {
 	return GormTaskStore{db: x}
+}
+
+func (x GormTaskStore) Create(task *Task) error {
+	return x.db.Create(task).Error
 }
 
 // func (store GormTaskStore) GetAll() ([]Task, error) {
@@ -50,14 +54,10 @@ func NewGormTaskStore(x *gorm.DB) GormTaskStore {
 // 	return &task, nil
 // }
 
-func (x GormTaskStore) Create(task *Task) error {
-	return x.db.Create(task).Error
-}
-
 // func (store GormTaskStore) Update(task *Task) error {
 // 	return store.db.Save(task).Error
 // }
 
-// func (store GormTaskStore) Delete(id uint) error {
-// 	return store.db.Delete(&Task{}, id).Error
-// }
+func (store GormTaskStore) Delete(id uint) error {
+	return store.db.Delete(&Task{}, id).Error
+}

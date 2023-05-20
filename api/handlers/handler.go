@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/AMao7/taskmanager/pkg/entity"
 	"github.com/gin-gonic/gin"
@@ -30,4 +31,21 @@ func (h *Handler) CreateTask(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, task)
+}
+
+func (h *Handler) DeleteTask(c *gin.Context) {
+	id := c.Param("id") // Get the ID from the URL path
+	uintID, err := strconv.ParseUint(id, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid task ID format"})
+		return
+	}
+
+	err = h.store.Delete(uint(uintID))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting task"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"status": "Task deleted successfully"})
 }
