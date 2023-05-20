@@ -21,7 +21,7 @@ func ConnectDatabase() *gorm.DB {
 	if err != nil {
 		panic("Failed to Connect to database")
 	}
-	DB.AutoMigrate(&entity.User{}, &entity.Task{})
+	DB.AutoMigrate(&entity.Task{})
 
 	psqlDB, err := DB.DB()
 	if err != nil {

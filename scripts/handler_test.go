@@ -52,8 +52,8 @@ func TestCreateTask(t *testing.T) {
 		Content:   "Sample Content",
 		CreatedAt: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
 		UpdatedAt: time.Date(2010, 1, 1, 0, 0, 0, 0, time.UTC),
-		UserID:    user.ID,
-		User:      user,
+		// UserID:    user.ID,
+		// User:      user,
 	}
 
 	mock.ExpectBegin()
