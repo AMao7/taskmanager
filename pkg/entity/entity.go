@@ -7,9 +7,9 @@ import (
 )
 
 type Task struct {
-	ID        uint      `gorm:"primary_key"`
-	Title     string    `gorm:"type:varchar(100);not null"`
-	Content   string    `gorm:"type:varchar(1000);not null"`
+	ID        uint      `gorm:"primary_key" validate:"required,gt=0"`
+	Title     string    `gorm:"type:varchar(100);not null" validate:"required,min=3,max=100"`
+	Content   string    `gorm:"type:varchar(1000);not null" validate:"required,min=10,max=100"`
 	CreatedAt time.Time `gorm:"autoCreateTime"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime"`
 }

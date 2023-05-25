@@ -6,6 +6,7 @@ import (
 
 	"github.com/AMao7/taskmanager/pkg/entity"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator"
 )
 
 type Handler struct {
@@ -22,6 +23,12 @@ func (h *Handler) CreateTask(c *gin.Context) {
 	var task entity.Task
 	if err := c.ShouldBindJSON(&task); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	validate := validator.New()
+	err := validate.Struct(task)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Validation failed", "fields": err.Error()})
 		return
 	}
 
