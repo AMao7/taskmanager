@@ -14,13 +14,20 @@ type Task struct {
 	UpdatedAt time.Time `gorm:"autoUpdateTime"`
 }
 
+func (t *Task) UpdateFrom(other Task) {
+	// Update fields from 'other' to 't'
+	t.Title = other.Title
+	t.Content = other.Content
+	// continue for all fields that can be updated
+}
+
 // TaskStore is an interface with five methods, each corresponding to a different operation you might want to perform on tasks:
 
 type TaskStore interface {
-	// GetAll() ([]Task, error)
-	// GetByID(id uint) (*Task, error)
+	GetAll() ([]Task, error)
+	GetByID(id uint) (*Task, error)
 	Create(task *Task) error
-	// Update(id *Task) error
+	Update(task *Task) error
 	Delete(id uint) error
 }
 
@@ -36,27 +43,27 @@ func (x GormTaskStore) Create(task *Task) error {
 	return x.db.Create(task).Error
 }
 
-// func (store GormTaskStore) GetAll() ([]Task, error) {
-// 	var tasks []Task
-// 	err := store.db.Find(&tasks).Error
-// 	return tasks, err
-// }
+func (store GormTaskStore) GetAll() ([]Task, error) {
+	var tasks []Task
+	err := store.db.Find(&tasks).Error
+	return tasks, err
+}
 
-// func (store GormTaskStore) GetByID(id uint) (*Task, error) {
-// 	var task Task
-// 	err := store.db.First(&task, id).Error
-// 	if err != nil {
-// 		if err == gorm.ErrRecordNotFound {
-// 			return nil, nil
-// 		}
-// 		return nil, err
-// 	}
-// 	return &task, nil
-// }
+func (store GormTaskStore) GetByID(id uint) (*Task, error) {
+	var task Task
+	err := store.db.First(&task, id).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &task, nil
+}
 
-// func (store GormTaskStore) Update(task *Task) error {
-// 	return store.db.Save(task).Error
-// }
+func (store GormTaskStore) Update(task *Task) error {
+	return store.db.Save(task).Error
+}
 
 func (store GormTaskStore) Delete(id uint) error {
 	return store.db.Delete(&Task{}, id).Error

@@ -20,13 +20,10 @@ func main() {
 	router := gin.Default()
 
 	router.POST("/tasks", x.CreateTask)
-	// router.GET("/tasks", handler.GetAllTasks)
-	// router.GET("/tasks/:id", handler.GetTask)
-	// router.PUT("/tasks/:id", handler.UpdateTask)
+	router.GET("/tasks", x.GetAllTasks)
+	router.GET("/tasks/:id", x.GetTask)
+	router.PUT("/tasks/:id", x.UpdateTask)
 	router.DELETE("/tasks/:id", x.DeleteTask)
-
-	// r.POST("/task", handlers.TaskHandler.CreateTask)
-	// r.GET("/getalltask", handlers.h.)
 
 	router.Run(":8080")
 }
